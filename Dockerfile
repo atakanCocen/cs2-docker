@@ -25,7 +25,7 @@ ENV CS2_PORT=27015
 ENV CS2_RCON_PORT=""
 
 # 0 - LAN mode disabled, 1 - LAN Mode enabled
-ENV CS2_LAN="0"  
+ENV CS2_LAN="0"
 
 # RCON password
 ENV CS2_RCONPW="changeme"
@@ -57,13 +57,5 @@ ENV CS2_LOG_MONEY=0
 ENV CS2_LOG_DETAIL=0
 ENV CS2_LOG_ITEMS=0
 
-# run counter strike sharp
-RUN cd /home/steam/cs2-dedicated; \
-wget https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1293-linux.tar.gz; \
-dir -s;\
-mkdir -p -v game/csgo/addons;\
-dir -s;
-
-# unzip
-#RUN cd /Steam/cs2-dedicated && tar -xzf test_app.tar.gz && rm test_app.tar.gz
-# store in necessary folder
+COPY hooks/pre.sh cs2-dedicated/pre.sh
+COPY hooks/post.sh cs2-dedicated/post.sh
