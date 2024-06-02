@@ -22,6 +22,9 @@ fi
 if [[ ! -d $METAMOD_DIR ]] ; then
 	echo "Downloading Metamod"
 
+	# -x tells tar to extract the zip
+	# -z tells tar to use gzip
+	# -C tells tar to where to extract the zip to
 	curl $METAMOD_URL | tar -xz -C $CSGO_DIR
 else
 	echo "Metamod already installed"
@@ -34,6 +37,10 @@ if [[ -f "$CSGO_DIR/gameinfo.gi" ]] ; then
 
 	if [[ -z $(grep "metamod" $CSGO_DIR/gameinfo.gi) ]] ; then
 		echo "Adding metamod to gameinfo.gi"
+
+		# -i tells sed to edit the file in place, and the '' is required on OSX to avoid creating a backup file
+		# -e tells sed to execute the following command. It looks for the line containing "Game_LowViolence" and appends the Metamod line after it
+		# Note: sed does not support \n for newline, so the newline and tabs are literal
 		sed -i '' -e "/Game_LowViolence/a\\
 			Game	csgo\/addons\/metamod" $CSGO_DIR/gameinfo.gi
 	else
@@ -48,7 +55,12 @@ fi
 if [[ ! -d $CS_SHARP_DIR ]] ; then
 	echo "Downloading CounterStrikeSharp"
 
+	# -L tells curl to follow redirects
+	# -o tells curl to output to the specified file
 	curl -Lo counterstrikesharp.zip $CS_SHARP_URL
+
+	# -q tells unzip to stfu
+	# -o tells unzip to overwrite files without prompting
 	unzip -qo counterstrikesharp.zip -d $CSGO_DIR
 	rm -f counterstrikesharp.zip
 else
