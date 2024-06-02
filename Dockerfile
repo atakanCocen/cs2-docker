@@ -1,60 +1,38 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
+
+WORKDIR /build
+
+COPY plugins/ plugins/
+COPY scripts/build-plugins.sh .
+
+RUN ./build-plugins.sh
+
 FROM joedwards32/cs2:latest
 
-# Game Server Token from https://steamcommunity.com/dev/managegameservers
-ENV SRCDS_TOKEN=""
+ARG METAMOD_URL="https://mms.alliedmods.net/mmsdrop/1.11/mmsource-1.11.0-git1155-linux.tar.gz"
+ARG CS_SHARP_URL="https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v239/counterstrikesharp-with-runtime-build-239-linux-a695eec.zip"
+
 
 # Set the visible name for your private server
 ENV CS2_SERVERNAME="realsrvr"
 
-# 0 - disable cheats, 1 - enable cheats
-ENV CS2_CHEATS=0
 
-# Put server in a low CPU state when there are no players. 
-# 0 - hibernation disabled, 1 - hibernation enabled
-# n.b. hibernation has been observed to trigger server crashes
-ENV CS2_SERVER_HIBERNATE=0
+# Download Metamod
+# -x tells tar to extract the zip
+# -z tells tar to use gzip
+# -C tells tar to where to extract the zip to
+RUN curl -Lo /tmp/metamod.tar.gz $METAMOD_URL
 
-# CS2 server listening IP address, 0.0.0.0 - all IP addresses on the local machine, empty - IP identified automatically
-ENV CS2_IP=""
 
-# CS2 server listen port tcp_udp
-ENV CS2_PORT=27015
+# Download CounterStrikeSharp
+# -L tells curl to follow redirects
+# -o tells curl to output to the specified file
+RUN curl -Lo /tmp/counterstrikesharp.zip $CS_SHARP_URL
 
-# Optional, use a simple TCP proxy to have RCON listen on an alternative port.
-# Useful for services like AWS Fargate which do not support mixed protocol ports.
-ENV CS2_RCON_PORT=""
 
-# 0 - LAN mode disabled, 1 - LAN Mode enabled
-ENV CS2_LAN="0"
+# Copy the server-data plugin to temporary directory to be copied in the pre.sh hook
+COPY --from=build /build/target/* /tmp/plugins/
 
-# RCON password
-ENV CS2_RCONPW="changeme"
 
-# CS2 server password
-ENV CS2_PW="changeme"
-
-# Max players allowed on the server
-ENV CS2_MAXPLAYERS=10
-
-# Optional additional arguments to pass into cs2
-ENV CS2_ADDITIONAL_ARGS=""
-
-# Game Modes
-ENV CS2_GAMEALIAS=""
-ENV CS2_GAMETYPE=0
-ENV CS2_GAMEMODE=1
-ENV CS2_MAPGROUP="mg_active"
-ENV CS2_STARTMAP="de_inferno"
-
-# Bots
-ENV CS2_BOT_DIFFICULTY=""
-ENV CS2_BOT_QUOTA=""
-ENV CS2_BOT_QUOTA_MODE=""
-
-# Logs
-ENV CS2_LOG="on"
-ENV CS2_LOG_MONEY=0
-ENV CS2_LOG_DETAIL=0
-ENV CS2_LOG_ITEMS=0
-
-COPY hooks/*.sh /etc
+COPY hooks/* /etc/
+COPY hooks/ephemeral/* /etc/
