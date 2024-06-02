@@ -1,16 +1,42 @@
 FROM joedwards32/cs2:latest
 
+# Game Server Token from https://steamcommunity.com/dev/managegameservers
 ENV SRCDS_TOKEN=""
+
+# Set the visible name for your private server
 ENV CS2_SERVERNAME="realsrvr"
+
+# 0 - disable cheats, 1 - enable cheats
 ENV CS2_CHEATS=0
+
+# Put server in a low CPU state when there are no players. 
+# 0 - hibernation disabled, 1 - hibernation enabled
+# n.b. hibernation has been observed to trigger server crashes
 ENV CS2_SERVER_HIBERNATE=0
+
+# CS2 server listening IP address, 0.0.0.0 - all IP addresses on the local machine, empty - IP identified automatically
 ENV CS2_IP=""
+
+# CS2 server listen port tcp_udp
 ENV CS2_PORT=27015
+
+# Optional, use a simple TCP proxy to have RCON listen on an alternative port.
+# Useful for services like AWS Fargate which do not support mixed protocol ports.
 ENV CS2_RCON_PORT=""
+
+# 0 - LAN mode disabled, 1 - LAN Mode enabled
 ENV CS2_LAN="0"  
+
+# RCON password
 ENV CS2_RCONPW="changeme"
+
+# CS2 server password
 ENV CS2_PW="changeme"
+
+# Max players allowed on the server
 ENV CS2_MAXPLAYERS=10
+
+# Optional additional arguments to pass into cs2
 ENV CS2_ADDITIONAL_ARGS=""
 
 # Game Modes
