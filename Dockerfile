@@ -57,5 +57,4 @@ ENV CS2_LOG_MONEY=0
 ENV CS2_LOG_DETAIL=0
 ENV CS2_LOG_ITEMS=0
 
-COPY hooks/pre.sh cs2-dedicated/pre.sh
-COPY hooks/post.sh cs2-dedicated/post.sh
+COPY hooks/*.sh /etc
