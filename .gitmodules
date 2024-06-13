@@ -1,0 +1,3 @@
+[submodule "plugins/ServerAnalyticsPlugin"]
+	path = plugins/ServerAnalyticsPlugin
+	url = git@github.com:atakanCocen/cs2-server-analytics-plugin.git
