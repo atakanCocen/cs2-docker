@@ -10,11 +10,7 @@ RUN ./build-plugins.sh
 FROM joedwards32/cs2:latest
 
 ARG METAMOD_URL="https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1293-linux.tar.gz"
-ARG CS_SHARP_URL="https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v239/counterstrikesharp-with-runtime-build-239-linux-a695eec.zip"
-
-
-# Set the visible name for your private server
-ENV CS2_SERVERNAME="realsrvr"
+ARG CS_SHARP_URL="https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v242/counterstrikesharp-with-runtime-build-242-linux-2eaf7c2.zip"
 
 
 # Download Metamod
