@@ -1,0 +1,96 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "cs2-server",
+            "cpu": 2048,
+            "memory": 4096,
+            "memoryReservation": 2048,
+            "portMappings": [
+                {
+                    "containerPort": 27015,
+                    "hostPort": 27015,
+                    "protocol": "udp"
+                },
+                {
+                    "name": "27050",
+                    "containerPort": 27050,
+                    "hostPort": 27050,
+                    "protocol": "tcp",
+                    "appProtocol": "http2"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "CS2_SERVERNAME",
+                    "value": "realsrvr"
+                },
+                {
+                    "name": "CS2_PORT",
+                    "value": "27015"
+                },
+                {
+                    "name": "CS2_RCON_PORT",
+                    "value": "27050"
+                }
+            ],
+            "secrets": [
+                {
+                    "valueFrom": "/cs2-server/srcds-token",
+                    "name": "SRCDS_TOKEN"
+                },
+                {
+                    "valueFrom": "/cs2-server/server-password",
+                    "name": "CS2_PW"
+                },
+                {
+                    "valueFrom": "/cs2-server/rcon-password",
+                    "name": "CS2_RCONPW"
+                }
+            ],
+            "mountPoints": [
+                {
+                    "sourceVolume": "cs2-install",
+                    "containerPath": "/home/steam/cs2-dedicated",
+                    "readOnly": false
+                }
+            ],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/cs2-server",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "cs2-server",
+    "taskRoleArn": "cs2-server-task-role",
+    "executionRoleArn": "cs2-server-task-role",
+    "networkMode": "awsvpc",
+    "volumes": [
+        {
+            "name": "cs2-install",
+            "configuredAtLaunch": true
+        }
+    ],
+    "placementConstraints": [],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "2048",
+    "memory": "4096",
+    "ephemeralStorage": {
+        "sizeInGiB": 21
+    },
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "tags": []
+}
