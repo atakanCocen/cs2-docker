@@ -30,5 +30,8 @@ RUN curl -Lo /tmp/counterstrikesharp.zip $CS_SHARP_URL
 COPY --from=build /build/target/* /tmp/plugins/
 
 
+COPY config/* /tmp/config/
+
+
 COPY hooks/* /etc/
 COPY hooks/ephemeral/* /etc/
