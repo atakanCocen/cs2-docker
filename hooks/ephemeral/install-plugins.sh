@@ -3,6 +3,8 @@
 CSGO_DIR="$STEAMAPPDIR/game/csgo"
 ADDONS_DIR="$CSGO_DIR/addons"
 METAMOD_DIR="$ADDONS_DIR/metamod"
+MAPS_DIR="$CSGO_DIR/maps"
+CFG_DIR="$CSGO_DIR/cfg"
 CS_SHARP_DIR="$ADDONS_DIR/counterstrikesharp"
 CS_SHARP_PLUGINS_DIR="$CS_SHARP_DIR/plugins"
 
@@ -75,3 +77,6 @@ for dir in /tmp/plugins/*/; do
 		echo "$plugin plugin already exists. Not copying."
 	fi
 done
+
+# Copy configs to cfg directory
+cp /tmp/config/*.cfg $CFG_DIR

@@ -32,6 +32,14 @@
                 {
                     "name": "CS2_RCON_PORT",
                     "value": "27050"
+                },
+                {
+                    "name": "CS2_ADDITIONAL_ARGS",
+                    "value": "+host_workshop_map 3076153623"
+                },
+                {
+                    "name": "CS2_GAMEALIAS",
+                    "value": "custom"
                 }
             ],
             "secrets": [
