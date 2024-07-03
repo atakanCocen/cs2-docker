@@ -1,5 +1,5 @@
 resource "aws_security_group" "cs2_server_nlb_sg" {
-  name        = "cs2-server-nlb-sg-temp"
+  name        = "cs2-server-nlb-sg"
   description = "Allow inbound traffic to the cs2-server load balancer"
   vpc_id      = data.aws_vpc.default.id
 
@@ -55,7 +55,7 @@ resource "aws_security_group" "cs2_server_nlb_sg" {
 
 
 resource "aws_security_group" "cs2_server_app_sg" {
-  name        = "cs2-server-app-sg-temp"
+  name        = "cs2-server-app-sg"
   description = "Allow inbound traffic to the cs2-server app"
   vpc_id      = data.aws_vpc.default.id
 
