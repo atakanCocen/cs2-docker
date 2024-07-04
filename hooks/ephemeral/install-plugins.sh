@@ -7,13 +7,14 @@ CS_SHARP_DIR="$ADDONS_DIR/counterstrikesharp"
 CS_SHARP_PLUGINS_DIR="$CS_SHARP_DIR/plugins"
 
 
-# Create addons directory if it doesn't exist
-if [[ ! -d "$ADDONS_DIR" ]] ; then
-	echo "Creating addons directory"
-	mkdir -p $ADDONS_DIR
-else
-	echo "Addons directory already exists"
+# Create addons directory. Recreate if it already exists
+if [[ -d "$ADDONS_DIR" ]] ; then
+	echo "Addons directory already exists. Removing..."
+	rm -rf $ADDONS_DIR
 fi
+
+echo "Creating addons directory"
+mkdir -p $ADDONS_DIR
 
 # Extract metamod if it doesn't exist
 # https://docs.cssharp.dev/docs/guides/getting-started.html#installing-metamod
