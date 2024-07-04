@@ -20,7 +20,7 @@ resource "aws_lb" "cs2_server" {
 
 resource "aws_lb_listener" "cs2_server_nlb_listener" {
   load_balancer_arn = aws_lb.cs2_server.arn
-  port              = 27015
+  port              = var.server_port
   protocol          = "UDP"
   default_action {
     type             = "forward"
@@ -31,7 +31,7 @@ resource "aws_lb_listener" "cs2_server_nlb_listener" {
 
 resource "aws_lb_listener" "cs2_server_nlb_rcon_listener" {
   load_balancer_arn = aws_lb.cs2_server.arn
-  port              = 27050
+  port              = var.rcon_port
   protocol          = "TCP"
   default_action {
     type             = "forward"
@@ -41,28 +41,28 @@ resource "aws_lb_listener" "cs2_server_nlb_rcon_listener" {
 
 resource "aws_lb_target_group" "cs2_server_tg" {
   name        = "cs2-server-tg"
-  port        = 27015
+  port        = var.server_port
   protocol    = "UDP"
-  vpc_id      = data.aws_vpc.default.id
+  vpc_id      = data.aws_vpc.main.id
   target_type = "ip"
 
   health_check {
     protocol = "TCP"
-    port     = 27050
+    port     = var.rcon_port
     interval = 300
   }
 }
 
 resource "aws_lb_target_group" "cs2_server_rcon_tg" {
   name        = "cs2-server-rcon-tg"
-  port        = 27050
+  port        = var.rcon_port
   protocol    = "TCP"
-  vpc_id      = data.aws_vpc.default.id
+  vpc_id      = data.aws_vpc.main.id
   target_type = "ip"
 
   health_check {
     protocol = "TCP"
-    port     = 27050
+    port     = var.rcon_port
     interval = 300
   }
 }

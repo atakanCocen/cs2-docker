@@ -1,13 +1,13 @@
 resource "aws_security_group" "cs2_server_nlb_sg" {
   name        = "cs2-server-nlb-sg"
   description = "Allow inbound traffic to the cs2-server load balancer"
-  vpc_id      = data.aws_vpc.default.id
+  vpc_id      = data.aws_vpc.main.id
 
   ingress = [
     {
       description      = "Allow inbound tcp traffic to the cs2 server for rcon"
-      from_port        = 27050
-      to_port          = 27050
+      from_port        = var.rcon_port
+      to_port          = var.rcon_port
       protocol         = "tcp",
       prefix_list_ids  = []
       cidr_blocks      = ["0.0.0.0/0"]
@@ -17,8 +17,8 @@ resource "aws_security_group" "cs2_server_nlb_sg" {
     },
     {
       description      = "Allow inbound udp traffic to the cs2 server"
-      from_port        = 27015
-      to_port          = 27015
+      from_port        = var.server_port
+      to_port          = var.server_port
       protocol         = "udp"
       prefix_list_ids  = []
       cidr_blocks      = ["0.0.0.0/0"]
@@ -57,13 +57,13 @@ resource "aws_security_group" "cs2_server_nlb_sg" {
 resource "aws_security_group" "cs2_server_app_sg" {
   name        = "cs2-server-app-sg"
   description = "Allow inbound traffic to the cs2-server app"
-  vpc_id      = data.aws_vpc.default.id
+  vpc_id      = data.aws_vpc.main.id
 
   ingress = [
     {
       description      = "Allow inbound tcp traffic to the cs2 server for rcon"
-      from_port        = 27050
-      to_port          = 27050
+      from_port        = var.rcon_port
+      to_port          = var.rcon_port
       protocol         = "tcp",
       prefix_list_ids  = []
       cidr_blocks      = []
@@ -73,8 +73,8 @@ resource "aws_security_group" "cs2_server_app_sg" {
     },
     {
       description      = "Allow inbound udp traffic to the cs2 server"
-      from_port        = 27015
-      to_port          = 27015
+      from_port        = var.server_port
+      to_port          = var.server_port
       protocol         = "udp"
       prefix_list_ids  = []
       cidr_blocks      = []

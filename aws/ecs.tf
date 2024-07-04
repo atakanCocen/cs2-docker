@@ -35,13 +35,13 @@ resource "aws_ecs_service" "cs2_server" {
   load_balancer {
     target_group_arn = aws_lb_target_group.cs2_server_tg.arn
     container_name   = "cs2-server"
-    container_port   = 27015
+    container_port   = var.server_port
   }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.cs2_server_rcon_tg.arn
     container_name   = "cs2-server"
-    container_port   = 27050
+    container_port   = var.rcon_port
   }
 
   health_check_grace_period_seconds = 900

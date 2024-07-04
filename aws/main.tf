@@ -13,16 +13,3 @@ terraform {
 provider "aws" {
   region = "us-east-1"
 }
-
-
-data "aws_vpc" "default" {
-  default = true
-}
-
-
-data "aws_subnet" "subnets" {
-  for_each          = toset(["us-east-1a", "us-east-1b", "us-east-1c"])
-  vpc_id            = data.aws_vpc.default.id
-  availability_zone = each.key
-  default_for_az    = true
-}
