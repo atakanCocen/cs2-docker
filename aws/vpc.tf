@@ -1,5 +1,6 @@
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_hostnames = true
 
   tags = {
     Name = "cs2-server-vpc"
@@ -7,11 +8,14 @@ resource "aws_vpc" "main" {
 }
 
 
+data "aws_availability_zones" "available" {}
+
+
 resource "aws_subnet" "subnet_1a" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, 1)
   map_public_ip_on_launch = true
-  availability_zone       = "us-east-1a"
+  availability_zone       = data.aws_availability_zones.available.names[0]
 }
 
 
@@ -19,7 +23,7 @@ resource "aws_subnet" "subnet_1b" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = cidrsubnet(aws_vpc.main.cidr_block, 8, 2)
   map_public_ip_on_launch = true
-  availability_zone       = "us-east-1b"
+  availability_zone       = data.aws_availability_zones.available.names[1]
 }
 
 
