@@ -48,5 +48,5 @@ jobs:
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: cs2-server
-        cluster: cs2-server
+        cluster: cs2-server-cluster
         wait-for-service-stability: true
