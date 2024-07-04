@@ -25,7 +25,7 @@
                 "logs:DescribeLogStreams",
                 "logs:PutLogEvents"
             ],
-            "Resource": "arn:aws:logs:us-east-1:${str_aws_account_id}:log-group:/ecs/cs2-server:*"
+            "Resource": "arn:aws:logs:${str_aws_region}:${str_aws_account_id}:log-group:/ecs/cs2-server:*"
         }
     ]
 }

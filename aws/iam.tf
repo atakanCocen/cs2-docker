@@ -1,12 +1,18 @@
 resource "aws_iam_policy" "cs2_server_exec_policy" {
-  name   = "cs2-server-exec-policy"
-  policy = templatefile("policy/cs2-server-exec-policy.json", { str_aws_account_id = var.str_aws_account_id })
+  name = "cs2-server-exec-policy"
+  policy = templatefile("policy/cs2-server-exec-policy.json", {
+    str_aws_account_id = var.str_aws_account_id,
+    str_aws_region     = var.str_aws_region
+  })
 }
 
 
 resource "aws_iam_policy" "cs2_server_ssm_policy" {
-  name   = "cs2-server-ssm-policy"
-  policy = templatefile("policy/cs2-server-ssm-policy.json", { str_aws_account_id = var.str_aws_account_id })
+  name = "cs2-server-ssm-policy"
+  policy = templatefile("policy/cs2-server-ssm-policy.json", {
+    str_aws_account_id = var.str_aws_account_id,
+    str_aws_region     = var.str_aws_region
+  })
 }
 
 
