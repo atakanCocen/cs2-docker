@@ -12,7 +12,7 @@ resource "aws_lb" "cs2_server" {
   security_groups    = [aws_security_group.cs2_server_nlb_sg.id]
 
   subnet_mapping {
-    subnet_id     = values(data.aws_subnet.subnets)[0].id
+    subnet_id     = aws_subnet.subnet_1a.id
     allocation_id = data.aws_eip.cs2_server_ip.id
   }
 }
@@ -43,7 +43,7 @@ resource "aws_lb_target_group" "cs2_server_tg" {
   name        = "cs2-server-tg"
   port        = var.server_port
   protocol    = "UDP"
-  vpc_id      = data.aws_vpc.main.id
+  vpc_id      = aws_vpc.main.id
   target_type = "ip"
 
   health_check {
@@ -57,7 +57,7 @@ resource "aws_lb_target_group" "cs2_server_rcon_tg" {
   name        = "cs2-server-rcon-tg"
   port        = var.rcon_port
   protocol    = "TCP"
-  vpc_id      = data.aws_vpc.main.id
+  vpc_id      = aws_vpc.main.id
   target_type = "ip"
 
   health_check {
