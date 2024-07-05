@@ -24,7 +24,7 @@ variable "rcon_port" {
 variable "use_existing_route53_zone" {
   description = "Use Existing Route53 Zone"
   type        = bool
-  default     = false
+  default     = true
 }
 
 

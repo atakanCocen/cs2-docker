@@ -1,7 +1,6 @@
-data "aws_eip" "cs2_server_ip" {
-  filter {
-    name   = "tag:Name"
-    values = ["cs2-server"]
+resource "aws_eip" "cs2_server_eip" {
+  tags = {
+    Name = "cs2-server"
   }
 }
 
@@ -13,7 +12,7 @@ resource "aws_lb" "cs2_server" {
 
   subnet_mapping {
     subnet_id     = aws_subnet.public_subnet.id
-    allocation_id = data.aws_eip.cs2_server_ip.id
+    allocation_id = aws_eip.cs2_server_eip.id
   }
 }
 
@@ -40,6 +39,7 @@ resource "aws_lb_listener" "cs2_server_nlb_rcon_listener" {
   }
 }
 
+
 resource "aws_lb_target_group" "cs2_server_tg" {
   name        = "cs2-server-tg"
   port        = var.server_port
@@ -57,6 +57,7 @@ resource "aws_lb_target_group" "cs2_server_tg" {
     interval = 300
   }
 }
+
 
 resource "aws_lb_target_group" "cs2_server_rcon_tg" {
   name        = "cs2-server-rcon-tg"
