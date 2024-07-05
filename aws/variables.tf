@@ -20,3 +20,21 @@ variable "rcon_port" {
   type        = number
   default     = 27050
 }
+
+variable "use_existing_route53_zone" {
+  description = "Use Existing Route53 Zone"
+  type        = bool
+  default     = false
+}
+
+
+variable "domain_name" {
+  description = "Domain Name"
+  type        = string
+}
+
+variable "subdomain_name" {
+  description = "Subdomain Name"
+  type        = string
+  default     = "cs2"
+}

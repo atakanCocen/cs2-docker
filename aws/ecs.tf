@@ -27,9 +27,9 @@ resource "aws_ecs_service" "cs2_server" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = [aws_subnet.subnet_1a.id, aws_subnet.subnet_1b.id]
+    subnets          = [aws_subnet.private_subnet.id]
     security_groups  = [aws_security_group.cs2_server_app_sg.id]
-    assign_public_ip = true
+    assign_public_ip = false
   }
 
   load_balancer {

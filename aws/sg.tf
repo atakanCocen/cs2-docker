@@ -108,3 +108,36 @@ resource "aws_security_group" "cs2_server_app_sg" {
     }
   ]
 }
+
+resource "aws_security_group" "cs2_server_vpc_endpoint_sg" {
+  name        = "cs2-server-vpc-endpoint-sg"
+  description = "Allow inbound traffic from the cs2 server app sg"
+  vpc_id      = aws_vpc.main.id
+
+  ingress = [
+    {
+      description      = "Allow inbound traffic from the cs2 server app sg"
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1",
+      prefix_list_ids  = []
+      cidr_blocks      = []
+      ipv6_cidr_blocks = []
+      security_groups  = [aws_security_group.cs2_server_app_sg.id]
+      self             = false
+    }
+  ]
+  egress = [
+    {
+      description      = "Allow all outbound traffic from the cs2 server vpc endpoint sg"
+      from_port        = 0
+      to_port          = 0
+      protocol         = "-1"
+      prefix_list_ids  = []
+      cidr_blocks      = []
+      ipv6_cidr_blocks = []
+      security_groups  = [aws_security_group.cs2_server_app_sg.id]
+      self             = false
+    }
+  ]
+}

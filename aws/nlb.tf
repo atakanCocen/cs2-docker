@@ -12,7 +12,7 @@ resource "aws_lb" "cs2_server" {
   security_groups    = [aws_security_group.cs2_server_nlb_sg.id]
 
   subnet_mapping {
-    subnet_id     = aws_subnet.subnet_1a.id
+    subnet_id     = aws_subnet.public_subnet.id
     allocation_id = data.aws_eip.cs2_server_ip.id
   }
 }
@@ -22,6 +22,7 @@ resource "aws_lb_listener" "cs2_server_nlb_listener" {
   load_balancer_arn = aws_lb.cs2_server.arn
   port              = var.server_port
   protocol          = "UDP"
+
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.cs2_server_tg.arn
@@ -46,6 +47,10 @@ resource "aws_lb_target_group" "cs2_server_tg" {
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
 
+  stickiness {
+    type = "source_ip"
+  }
+
   health_check {
     protocol = "TCP"
     port     = var.rcon_port
@@ -59,6 +64,10 @@ resource "aws_lb_target_group" "cs2_server_rcon_tg" {
   protocol    = "TCP"
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
+
+  stickiness {
+    type = "source_ip"
+  }
 
   health_check {
     protocol = "TCP"
