@@ -13,10 +13,6 @@ ARG METAMOD_URL="https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1293-l
 ARG CS_SHARP_URL="https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v247/counterstrikesharp-with-runtime-build-247-linux-f8451c2.zip"
 
 
-# Set the visible name for your private server
-ENV CS2_SERVERNAME="realsrvr"
-
-
 # Download Metamod
 # -x tells tar to extract the zip
 # -z tells tar to use gzip
