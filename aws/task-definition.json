@@ -70,8 +70,8 @@
         }
     ],
     "family": "cs2-server",
-    "taskRoleArn": "cs2-server-task-role",
-    "executionRoleArn": "cs2-server-task-role",
+    "taskRoleArn": "cs2-server-ecs-task-role",
+    "executionRoleArn": "cs2-server-ecs-execution-role",
     "networkMode": "awsvpc",
     "volumes": [
         {
