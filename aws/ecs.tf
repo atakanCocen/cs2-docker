@@ -20,11 +20,13 @@ resource "aws_ecs_cluster" "cs2_server" {
 
 
 resource "aws_ecs_service" "cs2_server" {
-  name            = "cs2-server"
-  cluster         = aws_ecs_cluster.cs2_server.id
-  task_definition = data.aws_ecs_task_definition.cs2_server.arn
-  desired_count   = 1
-  launch_type     = "FARGATE"
+  name                    = "cs2-server"
+  cluster                 = aws_ecs_cluster.cs2_server.id
+  task_definition         = data.aws_ecs_task_definition.cs2_server.arn
+  desired_count           = 1
+  launch_type             = "FARGATE"
+  enable_ecs_managed_tags = true
+
 
   network_configuration {
     subnets          = [aws_subnet.private_subnet.id]
