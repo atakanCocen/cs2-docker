@@ -61,5 +61,5 @@ resource "aws_ecs_service" "cs2_server" {
     }
   }
 
-  depends_on = [aws_iam_role.cs2_server_ebs_role, aws_iam_role.cs2_server_ecs_task_role]
+  depends_on = [aws_iam_role.cs2_server_ebs_role, aws_iam_role.cs2_server_ecs_execution_role, aws_iam_role.cs2_server_ecs_task_role]
 }
