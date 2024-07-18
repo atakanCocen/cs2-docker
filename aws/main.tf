@@ -12,4 +12,9 @@ terraform {
 
 provider "aws" {
   region = var.str_aws_region
+  default_tags {
+    tags = {
+      ApplicationName = "cs2-server"
+    }
+  }
 }
