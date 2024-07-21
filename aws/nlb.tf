@@ -1,18 +1,10 @@
-resource "aws_eip" "cs2_server_eip" {
-  tags = {
-    Name = "cs2-server"
-  }
-}
-
-
 resource "aws_lb" "cs2_server" {
   name               = "cs2-server-nlb"
   load_balancer_type = "network"
   security_groups    = [aws_security_group.cs2_server_nlb_sg.id]
 
   subnet_mapping {
-    subnet_id     = aws_subnet.public_subnet.id
-    allocation_id = aws_eip.cs2_server_eip.id
+    subnet_id = aws_subnet.public_subnet.id
   }
 }
 
