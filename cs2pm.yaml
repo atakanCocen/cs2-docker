@@ -1,0 +1,8 @@
+plugins:
+  - name: CS2-SimpleAdmin
+    description: Simple Admin Plugin
+    downloadUrl: https://github.com/daffyyyy/CS2-SimpleAdmin/releases/download/build-230/CS2-SimpleAdmin.zip
+    extractPrefix: addons/counterstrikesharp/plugins
+    uninstall:
+      directories:
+        - addons/counterstrikesharp/plugins/CS2-SimpleAdmin

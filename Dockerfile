@@ -1,3 +1,13 @@
+FROM golang:latest as plugins
+
+WORKDIR /build
+
+RUN go install github.com/hadley31/cs2pm@latest
+
+COPY cs2pm.yaml .
+
+RUN cs2pm install
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 as build
 
 WORKDIR /build
@@ -27,7 +37,8 @@ RUN curl -Lo /tmp/counterstrikesharp.zip $CS_SHARP_URL
 
 
 # Copy the server-data plugin to temporary directory to be copied in the pre.sh hook
-COPY --from=build /build/target/* /tmp/plugins/
+COPY --from=build /build/target/* /tmp/addons/counterstrikesharp/plugins/
+COPY --from=plugins /build/addons/ /tmp/addons/
 
 
 COPY hooks/* /etc/

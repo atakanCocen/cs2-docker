@@ -65,13 +65,5 @@ fi
 
 # Copy pre-baked CounterStrikeSharp plugins to plugins directory
 # https://docs.cssharp.dev/docs/guides/hello-world-plugin.html#installing-your-plugin
-for dir in /tmp/plugins/*/; do
-	plugin=$(basename $dir)
-	
-	if [[ ! -d "$CS_SHARP_PLUGINS_DIR/$plugin" ]] ; then
-		echo "Copying plugin to server: $plugin"
-		cp -r $dir $CS_SHARP_PLUGINS_DIR
-	else
-		echo "$plugin plugin already exists. Not copying."
-	fi
-done
+echo "Copying addons to $ADDONS_DIR"
+cp -r /tmp/addons/ $CSGO_DIR
