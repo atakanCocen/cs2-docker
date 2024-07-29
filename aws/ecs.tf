@@ -26,6 +26,7 @@ resource "aws_ecs_service" "cs2_server" {
   desired_count           = 1
   launch_type             = "FARGATE"
   enable_ecs_managed_tags = true
+  enable_execute_command  = true
 
 
   network_configuration {
