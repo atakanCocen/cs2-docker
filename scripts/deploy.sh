@@ -12,4 +12,4 @@ docker push $REGISTRY/$IMAGE_NAME:$TAG
 sleep 5
 
 # Restart the service
-aws ecs update-service --cluster cs2-server --service cs2-server --force-new-deployment
+aws ecs update-service --cluster cs2-server-cluster --service cs2-server --force-new-deployment

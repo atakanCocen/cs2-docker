@@ -1,8 +1,7 @@
 name: Build and Deploy to Amazon ECS
 on:
   push:
-    branches:
-      - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
