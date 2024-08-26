@@ -7,14 +7,14 @@ MAPS_DIR="$CSGO_DIR/maps"
 CFG_DIR="$CSGO_DIR/cfg"
 CS_SHARP_DIR="$ADDONS_DIR/counterstrikesharp"
 CS_SHARP_PLUGINS_DIR="$CS_SHARP_DIR/plugins"
-APP_MANIFEST_FOILE="$STEAMAPPDIR/appmanifest_730.acf"
+APP_MANIFEST_FILE="$STEAMAPPDIR/steamapps/appmanifest_730.acf"
 
 # Create a snapshot.
 # want to check the app manifest file
 # get the last updated time out of app manifest file
 # if the last updated time is within the last ~30 seconds
 # if yes, we want to create a snapshot
-if [ $(($(date +%s) - $(sed -n 's/.*"LastUpdated"\s*"\([0-9]*\)".*/\1/p' $APP_MANIFEST_FOILE))) -le 30 ]; then
+if [ $(($(date +%s) - $(sed -n 's/.*"LastUpdated"\s*"\([0-9]*\)".*/\1/p' $APP_MANIFEST_FILE))) -le 30 ]; then
 	echo "Timestamp is within the last 30 seconds"
 	SERVICE_NAME=${1:-"cs2-server"}
 	VOLUME_NAME=cs2-install
