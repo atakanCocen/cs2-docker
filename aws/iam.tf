@@ -15,6 +15,13 @@ resource "aws_iam_policy" "cs2_server_ssm_policy" {
   })
 }
 
+resource "aws_iam_policy" "cs2_server_create_snapshot_policy" {
+  name = "cs2-server-create-snapshot-policy"
+  policy = templatefile("policy/cs2-server-create-snapshot-policy.json", {
+    str_aws_account_id = var.str_aws_account_id,
+    str_aws_region     = var.str_aws_region
+  })
+}
 
 resource "aws_iam_role" "cs2_server_ecs_task_role" {
   name = "cs2-server-ecs-task-role"
@@ -31,7 +38,8 @@ resource "aws_iam_role" "cs2_server_ecs_task_role" {
     ]
   })
   managed_policy_arns = [
-    aws_iam_policy.cs2_server_exec_policy.arn
+    aws_iam_policy.cs2_server_exec_policy.arn,
+    aws_iam_policy.cs2_server_create_snapshot_policy.arn
   ]
 }
 
