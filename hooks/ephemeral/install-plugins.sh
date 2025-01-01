@@ -7,7 +7,27 @@ MAPS_DIR="$CSGO_DIR/maps"
 CFG_DIR="$CSGO_DIR/cfg"
 CS_SHARP_DIR="$ADDONS_DIR/counterstrikesharp"
 CS_SHARP_PLUGINS_DIR="$CS_SHARP_DIR/plugins"
+APP_MANIFEST_FILE="$STEAMAPPDIR/steamapps/appmanifest_730.acf"
 
+# Create a snapshot.
+# want to check the app manifest file
+# get the last updated time out of app manifest file
+# if the last updated time is within the last ~30 seconds
+# if yes, we want to create a snapshot
+CURRENT_TIME=$(date +%s)
+LAST_UPDATED_TIME=$(sed -n 's/.*"LastUpdated"\s*"\([0-9]*\)".*/\1/p' $APP_MANIFEST_FILE)
+
+if [ $(($CURRENT_TIME - $LAST_UPDATED_TIME)) -le 30 ]; then
+	echo "Timestamp is within the last 30 seconds"
+	SNAPSHOT_NAME=cs2-install
+	TASK_ARN=$(curl -s "$ECS_CONTAINER_METADATA_URI_V4/task" | jq -r ".TaskARN")
+	VOLUME_ID=$(aws ec2 describe-volumes --filters "Name=tag:AmazonECSCreated,Values=$TASK_ARN" --query 'Volumes[*].VolumeId' --output text)
+
+	echo "CS2 was recently updated. Creating a snapshot for volume $VOLUME_ID"
+	aws ec2 create-snapshot --volume-id $VOLUME_ID --description "Counter-Strike 2 Install Snapshot" --tag-specifications "ResourceType=snapshot,Tags=[{Key=Name,Value=$SNAPSHOT_NAME}]"
+else
+	echo "CS2 was not updated. Not creating a snapshot."
+fi
 
 # Create addons directory. Recreate if it already exists
 if [[ -d "$ADDONS_DIR" ]] ; then

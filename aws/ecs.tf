@@ -47,7 +47,7 @@ resource "aws_ecs_service" "cs2_server" {
     container_port   = var.rcon_port
   }
 
-  health_check_grace_period_seconds = 900
+  health_check_grace_period_seconds = 5000
 
   volume_configuration {
     name = "cs2-install"
