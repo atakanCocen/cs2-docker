@@ -36,6 +36,10 @@
         {
           "name": "CS2_GAMEALIAS",
           "value": "custom"
+        },
+        {
+          "name": "CS2_STARTMAP",
+          "value": "de_nuke"
         }
       ],
       "secrets": [
