@@ -32,6 +32,10 @@
         {
           "name": "CS2_RCON_PORT",
           "value": "27050"
+        },
+        {
+          "name": "CS2_GAMEALIAS",
+          "value": "custom"
         }
       ],
       "secrets": [
